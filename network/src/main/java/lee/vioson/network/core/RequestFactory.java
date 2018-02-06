@@ -31,7 +31,7 @@ public class RequestFactory {
         return new Requester<I>(url, clazz);
     }
 
-    public static void request(Observable observable, Observer subscriber) {
+    public static  void request(Observable observable, Observer subscriber) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
