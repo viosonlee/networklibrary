@@ -30,7 +30,7 @@ public abstract class BaseObserver<T> implements Observer<BaseResponse<T>> {
     @Override
     public void onNext(BaseResponse<T> response) {
         try {
-            if (response.isOk()) {
+            if (responseIsOk(response)) {
                 onHandleSuccess(response.getData());
             } else onHandleError(new BaseApiException(response));
         } catch (Exception e) {
@@ -58,7 +58,11 @@ public abstract class BaseObserver<T> implements Observer<BaseResponse<T>> {
         onHandleError(new BaseApiException(-999, e.getMessage()));
     }
 
-    public  interface LoadingListener {
+    public boolean responseIsOk(BaseResponse<T> response) {
+        return response.isOk();
+    }
+
+    public interface LoadingListener {
         void onStartLoading();
 
         void onDismissLoading();
