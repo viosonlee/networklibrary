@@ -1,24 +1,25 @@
 package lee.vioson.network.core;
 
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
  * Created by viosonlee
- * on 2018/5/26.
- * for
+ * on 2017/10/30.
+ * for 基本回调
  */
-public abstract class BaseObserver<T extends BaseResponse> implements Observer<T> {
-    private static final String TAG = "BaseObserver";
+
+public abstract class DataObserver<T> implements Observer<BaseResponse<T>> {
+    private static final String TAG = "DataObserver";
     private LoadingListener loadingListener;
 
-    public BaseObserver(LoadingListener loadingListener) {
+    public DataObserver() {
+    }
+
+    public DataObserver(LoadingListener loadingListener) {
         this.loadingListener = loadingListener;
     }
 
-    public BaseObserver() {
-    }
     @Override
     public void onSubscribe(Disposable d) {
         if (loadingListener != null) {
@@ -27,10 +28,10 @@ public abstract class BaseObserver<T extends BaseResponse> implements Observer<T
     }
 
     @Override
-    public void onNext(T response) {
+    public void onNext(BaseResponse<T> response) {
         try {
             if (responseIsOk(response)) {
-                onHandleSuccess(response);
+                onHandleSuccess(response.getData());
             } else onHandleError(new BaseApiException(response));
         } catch (Exception e) {
             onHandleError(new BaseApiException(-999, e.getMessage()));//其他错误
@@ -60,7 +61,8 @@ public abstract class BaseObserver<T extends BaseResponse> implements Observer<T
         onHandleError(new BaseApiException(-999, e.getMessage()));
     }
 
-    public boolean responseIsOk(T response) {
+    public boolean responseIsOk(BaseResponse<T> response) {
         return response.isOk();
     }
+
 }
