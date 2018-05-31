@@ -13,7 +13,7 @@ import lee.vioson.network.BuildConfig;
 
 public class DebugLog {
     private static boolean isDebug = BuildConfig.DEBUG;
-    private static final String TAG = "POKER_LOOPS";
+    private static final String TAG = BuildConfig.APPLICATION_ID;
 
     public static void d(String tag, String value) {
         if (isDebug) {

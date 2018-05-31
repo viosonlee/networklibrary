@@ -9,14 +9,14 @@ import io.reactivex.disposables.Disposable;
  * for 基本回调
  */
 
-public abstract class DataObserver<T> implements Observer<BaseResponse<T>> {
-    private static final String TAG = "DataObserver";
+public abstract class ResponseHandler<T> implements Observer<BaseResponse<T>> {
+    private static final String TAG = "ResponseHandler";
     private LoadingListener loadingListener;
 
-    public DataObserver() {
+    public ResponseHandler() {
     }
 
-    public DataObserver(LoadingListener loadingListener) {
+    public ResponseHandler(LoadingListener loadingListener) {
         this.loadingListener = loadingListener;
     }
 

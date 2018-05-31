@@ -89,7 +89,7 @@ public class RequestFactory {
         }
 
         public T getAPIForStringSaveCookies(Context context) {
-            return getAPI(null, false);
+            return getAPI(context, false);
         }
 
         public T getAPIForJson() {
@@ -97,7 +97,7 @@ public class RequestFactory {
         }
 
         public T getAPIForJsonSaveCookies(Context context) {
-            return getAPI(null, true);
+            return getAPI(context, true);
         }
     }
 }

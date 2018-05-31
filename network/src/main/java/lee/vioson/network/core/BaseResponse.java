@@ -35,7 +35,7 @@ public class BaseResponse<T> {
 
     public boolean isOk() {
         // TODO: 2017/10/30 判断正确ma
-        return cd >= 0;
+        return cd > 0;
     }
 
     @Override

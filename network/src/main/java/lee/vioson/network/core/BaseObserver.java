@@ -19,6 +19,7 @@ public abstract class BaseObserver<T extends BaseResponse> implements Observer<T
 
     public BaseObserver() {
     }
+
     @Override
     public void onSubscribe(Disposable d) {
         if (loadingListener != null) {
@@ -29,9 +30,7 @@ public abstract class BaseObserver<T extends BaseResponse> implements Observer<T
     @Override
     public void onNext(T response) {
         try {
-            if (responseIsOk(response)) {
-                onHandleSuccess(response);
-            } else onHandleError(new BaseApiException(response));
+            onHandleSuccess(response);
         } catch (Exception e) {
             onHandleError(new BaseApiException(-999, e.getMessage()));//其他错误
         }
@@ -39,7 +38,7 @@ public abstract class BaseObserver<T extends BaseResponse> implements Observer<T
 
     protected void onHandleError(BaseApiException e) {
         DebugLog.e(TAG, e.getMessage());
-        if (loadingListener!=null) {
+        if (loadingListener != null) {
             loadingListener.onDismissLoading();
         }
     }
@@ -57,10 +56,10 @@ public abstract class BaseObserver<T extends BaseResponse> implements Observer<T
 
     @Override
     public void onError(Throwable e) {
-        onHandleError(new BaseApiException(-999, e.getMessage()));
+        if (e instanceof BaseApiException)
+            onHandleError((BaseApiException) e);
+        else
+            onHandleError(new BaseApiException(-999, e.getMessage()));
     }
 
-    public boolean responseIsOk(T response) {
-        return response.isOk();
-    }
 }
